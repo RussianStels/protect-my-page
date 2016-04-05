@@ -1,0 +1,33 @@
+.settingsButton {
+    position: fixed;
+    right: 0px;
+    bottom: 0px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    opacity: 0.5;
+    padding: 1px;
+    background: rgb(0, 0, 0);
+}
+.blur {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	padding-top: 25%;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	font:  18pt sans-serif;
+	background: rgb( 255, 255, 255);
+}
+.settingsWindow {
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	padding-top: 10%;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	font:  18pt sans-serif;
+	background: rgba( 255, 255, 255, 0.8);
+}
