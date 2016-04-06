@@ -24,6 +24,7 @@ sourceURL = ("src/"+location.pathname.split('/')[location.pathname.split('/').le
 //	+ Парольная защита
 showButton = true;	// отображение кнопки с информацией о скрипте
 allowDisabling = true;	// возможность отключить скрипт по паролю
+showHash = false; // отображение хеша при вводе пароля
 disablePassword = "-792095615";	// пароль для отключения | "pass123".hashCode();
 
 String.prototype.hashCode = function(){ // вычисления хеша. 
@@ -56,7 +57,10 @@ String.prototype.hashCode = function(){ // вычисления хеша.
 		denyPrscr = false;		// запрет на снимок экрана
 		showButton = false;	// отображение кнопки с информацией о скрипте
 		allowDisabling = false;	// возможность отключить скрипт по паролю
-		settingsDiv.style.display = "none"; // убираем кнопку с экрана
+		//settingsDiv.style.display = "none"; // убираем кнопку с экрана
+		document.body.removeChild(settingsWindow);
+		document.body.removeChild(settingsDiv);
+		document.body.removeChild(blur);
 		document.onmousedown = document.onselectstart = NaN; // включение выделения
 		document.ondragstart = NaN; // включение перетаскивания
 		document.head.removeChild(protectImg); // выключение защиты изображений
@@ -112,7 +116,9 @@ String.prototype.hashCode = function(){ // вычисления хеша.
 				closeSettings();
 				disableProtection();
 			}
-			else alert("Ошибка: Неверный пароль");
+			else if(typeof showHash != 'undefined' && showHash) alert("Ошибка: Неверный пароль \nHash: " + document.getElementById("passField").value.hashCode())
+			else
+				alert("Ошибка: Неверный пароль");
 		};
 		function protectSaving() { // отключает сохранение (Ctrl+S)
 			function preventSaving(event) {
@@ -125,7 +131,7 @@ String.prototype.hashCode = function(){ // вычисления хеша.
 		};
 		function protectPrintScreen(){ // отключает PrintScreen
 			function preventPrscr (event) {
-				if((typeof conProtect == 'undefined' || !conProtect) || denyPrscr && event.keyCode == 44){
+				if(((typeof conProtect == 'undefined' || !conProtect) || denyPrscr) && event.keyCode == 44){
 					openSettings(); // открытие окна с вводом пароля
 					event.preventDefault();
 					nope;
@@ -139,7 +145,7 @@ String.prototype.hashCode = function(){ // вычисления хеша.
 			blur.className = "blur";
 			blur.style.display = "none";
 			blur.innerHTML="<p>Содержимое скрыто</p><p><button onclick='window.onfocus();'>показать</button></p>";
-			window.onblur = function(){ if((typeof conProtect == 'undefined' || !conProtect) || denyPrscr) blur.style.display = "block"; document.body.clear;};
+			window.onblur = function(){ if((typeof conProtect == 'undefined' || !conProtect) || denyPrscr) blur.style.display = "block";};
 			window.onfocus = function(){blur.style.display = "none";};
 		};
 		function protectSelection(){ // отключает выделение
